@@ -56,7 +56,7 @@ jobs:
           zip nuget_${{ matrix.suffix }}.zip nuget_${{ matrix.suffix }}.exe
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: nuget_${{ matrix.suffix }}
           path: nuget_${{ matrix.suffix }}.*
