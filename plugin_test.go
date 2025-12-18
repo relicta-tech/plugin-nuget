@@ -143,8 +143,8 @@ func TestValidate(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			// Set env vars
 			for k, v := range tt.envVars {
-				os.Setenv(k, v)
-				defer os.Unsetenv(k)
+				_ = os.Setenv(k, v)
+				defer func(key string) { _ = os.Unsetenv(key) }(k)
 			}
 
 			resp, err := p.Validate(ctx, tt.config)
@@ -224,12 +224,12 @@ func TestParseConfig(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			// Set env vars
 			for k, v := range tt.envVars {
-				os.Setenv(k, v)
-				defer os.Unsetenv(k)
+				_ = os.Setenv(k, v)
+				defer func(key string) { _ = os.Unsetenv(key) }(k)
 			}
 			// Clear env var if not set in test
 			if _, exists := tt.envVars["NUGET_API_KEY"]; !exists {
-				os.Unsetenv("NUGET_API_KEY")
+				_ = os.Unsetenv("NUGET_API_KEY")
 			}
 
 			// Parse config using helper functions
